@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main() {
+    struct Node *head, *temp, *prev;
+    int k, i;
+
+    // Create nodes
+    head = (struct Node *)malloc(sizeof(struct Node));
+    head->data = 10;
+
+    head->next = (struct Node *)malloc(sizeof(struct Node));
+    head->next->data = 20;
+
+    head->next->next = (struct Node *)malloc(sizeof(struct Node));
+    head->next->next->data = 30;
+
+    head->next->next->next = NULL;
+
+    printf("Enter position to delete: ");
+    scanf("%d", &k);
+
+    // Deletion from beginning
+    if (k == 1) {
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
+    else {
+        temp = head;
+
+        // Move to kth node
+        for (i = 1; i < k; i++) {
+            prev = temp;
+            temp = temp->next;
+        }
+
+        // Delete kth node
+        prev->next = temp->next;
+        free(temp);
+    }
+
+    // Display linked list
+    temp = head;
+
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+
+    printf("NULL");
+
+    return 0;
+}
